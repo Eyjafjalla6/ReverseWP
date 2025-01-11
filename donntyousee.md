@@ -2,11 +2,31 @@ CCSSSC-2025
 
 ## donntyousee
 
+
+
+
+
+### 跟踪一波
+
 程序参杂着很多花指令，所以直接看汇编
 
 
 
-从start函数开始跟踪
+可以直接搜字符串
+
+![image-20250111000545556](./donntyousee.assets/image-20250111000545556.png)
+
+跳过去然后交叉引用到下图
+
+![image-20250111000644582](./donntyousee.assets/image-20250111000644582.png)
+
+对`_ZTI3rc4`进行交叉引用，来到下图，然后跟踪一下四个函数就行
+
+![image-20250111000925737](./donntyousee.assets/image-20250111000925737.png)
+
+
+
+或者从start函数开始跟踪（很阴间）
 
 跟踪发现rc4
 
@@ -201,9 +221,22 @@ int main(){
 
 
 
+### ptrace反调试处理
+
+按理来说，现在该做出来了，但是前面有反调试，导致我们结果是错的
+
+kali `strace`一下查看系统调用
+
+```
+strace -f -F -o ./1.txt ./chall
+cat ./1.txt
+```
+
+![image-20250111123425422](./donntyousee.assets/image-20250111123425422.png)
 
 
-按理来说，现在该做出来了，但是前面有ptrace反调试，导致我们结果是错的
+
+`alt+T`搜索`ptrace`即可找到ptrace反调试位置
 
 ![image-20250110202001336](./donntyousee.assets/image-20250110202001336.png)
 
@@ -386,6 +419,12 @@ int main() {
 ![image-20250110232523703](./donntyousee.assets/image-20250110232523703.png)
 
 
+
+
+
+## 参考
+
+[REVERSE-COMPETITION-CCSSSC-2025 P1umH0](https://blog.csdn.net/weixin_45582916/article/details/144962552)
 
 
 
